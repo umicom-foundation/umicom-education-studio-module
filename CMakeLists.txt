@@ -72,6 +72,12 @@ target_link_libraries(umicom_education_module PUBLIC
 umicom_apply_warnings(umicom_education_module)
 umicom_apply_sanitizers(umicom_education_module)
 
+include(
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../framework/cmake/UmicomThinApplicationRuntime.cmake")
+umicom_extend_thin_application_runtime(
+    NAME "education"
+    TARGET "umicom_education_module")
+
 if(UMICOM_EDUCATION_BUILD_CONSOLE)
     add_executable(umicom-education-console
         src/console/main.c)
