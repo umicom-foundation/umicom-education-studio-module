@@ -28,12 +28,20 @@ static const UmiProductApplicationAdoption ADOPTION = {
     1
 };
 
+/*
+ * Provide the education productisation contribution operation used by this module and its
+ * client applications.
+ */
 const UmiProductApplicationAdoption *
 umi_education_productisation_contribution(void)
 {
     return &ADOPTION;
 }
 
+/*
+ * Provide the education productisation snapshot operation used by this module and its
+ * client applications.
+ */
 UmiStatus umi_education_productisation_snapshot(
     UmiProductApplicationAdoptionSnapshot *out_snapshot)
 {

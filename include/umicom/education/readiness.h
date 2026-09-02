@@ -23,8 +23,16 @@
 extern "C" {
 #endif
 
+/**
+ * Provide the education readiness report operation used by this module and its client
+ * applications.
+ */
 UmiStatus umi_education_readiness_report(
     UmiApplicationReadinessReport *out_report);
+/**
+ * Provide the education readiness next feature operation used by this module and its
+ * client applications.
+ */
 const UmiExperienceFeatureDefinition *umi_education_readiness_next_feature(void);
 
 #ifdef __cplusplus
