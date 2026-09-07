@@ -6,6 +6,8 @@ application:
   short_name: Education Studio
   version: 0.1.0
   executable: umicom-education-console
+  native_executable: umicom-education
+  console_executable: umicom-education-console
   aliases: [education]
 
 framework:
@@ -14,6 +16,8 @@ framework:
 
 frontends:
   - console
+  # Shared Framework GTK layout preview; domain services require controllers.
+  - gtk
 
 entry:
   kind: workbench
