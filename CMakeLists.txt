@@ -148,3 +148,33 @@ umicom_add_application_productisation_contribution(
     TARGET umicom_education_productisation
     SOURCE "src/productisation_contribution.c"
     TEST_SOURCE "tests/test_productisation_contribution.c")
+
+# The lessons frontend is presentation only. Framework remains the sole
+# catalogue, lesson resource and learning-plan owner; no local lesson table.
+if(UMICOM_EDUCATION_BUILD_CONSOLE)
+    if(NOT TARGET Umicom::developer)
+        message(FATAL_ERROR "Education lessons require Framework target Umicom::developer")
+    endif()
+    add_executable(umicom-education-lessons src/console/lessons.c)
+    target_link_libraries(umicom-education-lessons PRIVATE Umicom::developer)
+    umicom_apply_warnings(umicom-education-lessons)
+    umicom_apply_sanitizers(umicom-education-lessons)
+    install(TARGETS umicom-education-lessons
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT Learning)
+    if(BUILD_TESTING)
+        add_test(NAME education.learning.list COMMAND umicom-education-lessons --list)
+        add_test(NAME education.learning.git COMMAND umicom-education-lessons --lesson foundations.git-workflow)
+        add_test(NAME education.learning.c COMMAND umicom-education-lessons --lesson foundations.bounded-strings)
+        add_test(NAME education.learning.assembly COMMAND umicom-education-lessons --lesson foundations.assembly-loops)
+        add_test(NAME education.learning.unknown COMMAND umicom-education-lessons --lesson missing.lesson)
+        set_tests_properties(education.learning.unknown PROPERTIES WILL_FAIL TRUE)
+        add_test(NAME education.learning.arguments COMMAND umicom-education-lessons --lesson)
+        set_tests_properties(education.learning.arguments PROPERTIES WILL_FAIL TRUE)
+        set_tests_properties(education.learning.list education.learning.git education.learning.c
+            education.learning.assembly education.learning.unknown education.learning.arguments
+            PROPERTIES LABELS "education;learning;framework;regression" TIMEOUT 15)
+        if(COMMAND umicom_register_validation_target)
+            umicom_register_validation_target(umicom-education-lessons)
+        endif()
+    endif()
+endif()
