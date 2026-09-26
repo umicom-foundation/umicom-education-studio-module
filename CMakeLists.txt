@@ -178,3 +178,8 @@ if(UMICOM_EDUCATION_BUILD_CONSOLE)
         endif()
     endif()
 endif()
+
+# The practicum is an additional Framework capability. Existing lesson listing,
+# productisation, runtime and catalogue tests remain part of this composition.
+include("${CMAKE_CURRENT_SOURCE_DIR}/../../framework/cmake/UmicomEducationWorkspace.cmake")
+umicom_attach_education_workspace(NAME education TARGET umicom_education_module)
